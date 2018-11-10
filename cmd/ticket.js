@@ -9,14 +9,14 @@ exports.run = (client, message, args) => {
 		return chanName;
 	}
 
-	message.guild.createChannel(chanName(), 'text', [{
+	message.guild.createChannel(`${getID()}`, 'text', [{
 		id: message.guild.id,
 		deny: ['READ_MESSAGES']
 	}])
 		//.then(channel => channel.setParent('CATEGORY ID HERE'))
 		.catch(console.error);
 
-	//message.member.addRole('ROLE ID HERE');
+	message.member.addRole('510742129006477344');
 }
 
 exports.conf = {
