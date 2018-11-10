@@ -7,7 +7,7 @@ cmd.run = (client, message, args, Discord, db) => {
 		.catch(err => console.log(err));
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],

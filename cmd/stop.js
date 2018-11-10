@@ -7,7 +7,7 @@ cmd.run = (client, message, args, Discord, db) => {
     dispatcher.end();
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],

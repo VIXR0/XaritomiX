@@ -15,7 +15,7 @@ cmd.run = (client, message, args, Discord, db) => {
 	message.delete();
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],

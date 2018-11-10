@@ -56,10 +56,12 @@ client.on("message", message => {
     } else if (client.aliases.has(command)) {
         cmd = client.commands.get(client.aliases.get(command));
     }
-    if (cmd) {
-        // if (perms < cmd.conf.permLevel) return message.channel.send(`Im sorry, but this command requires a permission level of ${cmd.conf.permLevel} or higher.`);
-    cmd.run(client, message, args, Discord, db);
-    }
+    try {
+        let cmd = require(`./commands/${command}.js`);
+    
+        cmd.use(client, message, args, Discord, db);
+      }
+      catch (err) {}
 });
 
 client.isVoiceChannel = function(message) {

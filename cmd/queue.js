@@ -18,12 +18,16 @@ cmd.run = (client, message, args, Discord, db) => {
     message.channel.send(embed);
 }
 
+<<<<<<< HEAD
 function queueChunk() {
 
     
 }
 
 exports.conf = {
+=======
+cmd.conf = {
+>>>>>>> b6d49c01616736c48593c5ce6718da3cff73f369
     enabled: true,
     guildOnly: false,
     aliases: ['leave'],

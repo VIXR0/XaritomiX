@@ -18,7 +18,7 @@ cmd.run = (client, message, args, Discord, db) => {
     
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: ['vol'],

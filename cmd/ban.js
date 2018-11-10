@@ -15,15 +15,9 @@ cmd.run = (client, message, args, Discord, db) => {
     	.then(msg => msg.delete(5000));
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],
     permLevel: 0
-};
-  
-exports.help = {
-    name: "ban",
-    description: "This command will ban the specified user from the guild with a set reason.",
-    usage: "ban <@> <reason>"
 };
