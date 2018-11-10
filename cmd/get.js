@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+cmd.run = (client, message, args, Discord, db) => {
     client.db.get("Discord_Guilds").run(client, message, args, "get");
 
     
@@ -10,9 +10,3 @@ exports.conf = {
     aliases: [],
     permLevel: 0
   };
-  
-exports.help = {
-    name: "get",
-    description: "Will ping you",
-    usage: "eval <command>"
-};

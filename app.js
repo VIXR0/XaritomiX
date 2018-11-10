@@ -58,7 +58,7 @@ client.on("message", message => {
     }
     if (cmd) {
         // if (perms < cmd.conf.permLevel) return message.channel.send(`Im sorry, but this command requires a permission level of ${cmd.conf.permLevel} or higher.`);
-    cmd.run(client, message, args);
+    cmd.run(client, message, args, Discord, db);
     }
 });
 

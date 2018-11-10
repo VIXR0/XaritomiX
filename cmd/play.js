@@ -9,7 +9,7 @@ const playlistDB = require("../models/Guild_playlist");
 const mongoose = require("mongoose");
 mongoose.connect('mongodb://localhost/XaritomiX', { useNewUrlParser: true});
 
-exports.run = async (client, message, args, perms) => {
+cmd.run = (client, message, args, Discord, db) => {
     // Checks that the user is in the voice channel, if not then return nothing
     const voiceChannel = message.member.voiceChannel;
     if (!voiceChannel) return message.channel.send("I'm sorry but you must be in the voice channel to request a song");
@@ -215,10 +215,4 @@ exports.conf = {
     guildOnly: false,
     aliases: [],
     permLevel: 0
-};
-  
-exports.help = {
-    name: "play",
-    description: "Will play a song from youtube",
-    usage: "play <LINK | Key Term>"
 };

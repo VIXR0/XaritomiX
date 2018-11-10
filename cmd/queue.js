@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 const Discord = require('discord.js');
 exports.run = (client, message, args) => {
+=======
+cmd.run = (client, message, args, Discord, db) => {
+>>>>>>> da0735a4dbd13c46e64f16b0b8adf8d51d74aabf
     const voicechannel = client.isVoiceChannel(message);
     if (!client.music.has(message.guild.id)) return; 
     const serverQueue = client.music.get(message.guild.id).songs;
@@ -24,10 +28,4 @@ exports.conf = {
     guildOnly: false,
     aliases: ['leave'],
     permLevel: 0
-};
-  
-exports.help = {
-    name: "queue",
-    description: "This command will display a list of all songs currently queued for this server",
-    usage: "queue <x>"
 };
