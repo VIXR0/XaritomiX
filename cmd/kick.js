@@ -1,4 +1,4 @@
-exports.run = (client, message, args) => {
+cmd.run = (client, message, args, Discord, db) => {
 	let kReason = args.join(" ").slice(22);
     let kUser = message.guild.member(message.mentions.first() || message.guild.members.get(args[0]));
 
@@ -15,15 +15,9 @@ exports.run = (client, message, args) => {
     	.then(msg => msg.delete(5000));
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],
     permLevel: 0
-};
-  
-exports.help = {
-    name: "kick",
-    description: "This command will the specified user from the guild with a set reason.",
-    usage: "kick <@> <reason>"
 };

@@ -1,4 +1,4 @@
-exports.run = (client, message, args) => {
+cmd.run = (client, message, args, Discord, db) => {
     if (!client.isVoiceChannel(message)) return;
 
     if (!client.music.has(message.guild.id)) return;
@@ -13,10 +13,4 @@ exports.conf = {
     guildOnly: false,
     aliases: [],
     permLevel: 0
-};
-  
-exports.help = {
-    name: "resume",
-    description: "This command will resume the stream",
-    usage: "resume"
 };

@@ -1,5 +1,4 @@
-const Discord = require('discord.js');
-exports.run = async (client, message, args) => {
+cmd.run = (client, message, args, Discord, db) => {
 	if (!args[0]) return message.channel.send("Usage: !poll <question>");
 
 	let embed = new Discord.RichEmbed()
@@ -21,10 +20,4 @@ exports.conf = {
     guildOnly: false,
     aliases: [],
     permLevel: 0
-};
-  
-exports.help = {
-    name: "poll",
-    description: "This command creates a poll in the current channel",
-    usage: "!poll <question>"
 };
