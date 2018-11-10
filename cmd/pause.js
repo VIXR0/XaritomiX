@@ -14,3 +14,9 @@ exports.conf = {
     aliases: [],
     permLevel: 0
 };
+
+exports.help = {
+    name: "pause",
+    description: "This command will the specified user from the guild with a set reason.",
+    usage: "kick <@> <reason>"
+};

@@ -1,13 +1,4 @@
-<<<<<<< HEAD
 exports.run = (client, message, args, Discord) => {
-=======
-<<<<<<< HEAD
-const Discord = require('discord.js');
-exports.run = (client, message, args) => {
-=======
-cmd.run = (client, message, args, Discord, db) => {
->>>>>>> da0735a4dbd13c46e64f16b0b8adf8d51d74aabf
->>>>>>> ac4c4fe45df4fe739c806a68e7b4520a5114bf81
 	let kReason = args.join(" ").slice(22);
     let kUser = message.guild.member(message.mentions.first() || message.guild.members.get(args[0]));
 
