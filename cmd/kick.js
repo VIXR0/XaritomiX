@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 exports.run = (client, message, args) => {
 	let kReason = args.join(" ").slice(22);
     let kUser = message.guild.member(message.mentions.first() || message.guild.members.get(args[0]));
