@@ -19,7 +19,7 @@ cmd.run = (client, message, args, Discord, db) => {
 	message.member.addRole('510742129006477344');
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],

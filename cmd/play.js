@@ -210,7 +210,7 @@ function addSongPlaylistDB(message, SongPlaylist) {
     });
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],

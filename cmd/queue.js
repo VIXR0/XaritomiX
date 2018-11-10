@@ -11,7 +11,7 @@ cmd.run = (client, message, args, Discord, db) => {
     message.channel.send(embed);
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],

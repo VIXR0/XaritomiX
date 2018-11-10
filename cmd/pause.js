@@ -8,7 +8,7 @@ cmd.run = (client, message, args, Discord, db) => {
     message.channel.send("Stream has been **Paused**");
 }
 
-exports.conf = {
+cmd.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],
