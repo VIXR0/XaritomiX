@@ -57,7 +57,7 @@ client.on("message", message => {
         cmd = client.commands.get(client.aliases.get(command));
     }
     try {
-        let cmd = require(`./commands/${command}.js`);
+        let cmd = require(`./cmd/${command}.js`);
     
         cmd.use(client, message, args, Discord, db);
       }
