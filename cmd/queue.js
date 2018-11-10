@@ -1,4 +1,4 @@
-cmd.run = (client, message, args, Discord, db) => {
+exports.run = (client, message, args, Discord) => {
     const voicechannel = client.isVoiceChannel(message);
 
     const serverQueue = client.music.get(message.guild.id).songs;
@@ -11,9 +11,15 @@ cmd.run = (client, message, args, Discord, db) => {
     message.channel.send(embed);
 }
 
-cmd.conf = {
+exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],
     permLevel: 0
+};
+  
+exports.help = {
+    name: "queue",
+    description: "This command will display a list of all songs currently queued for this server",
+    usage: "queue <x>"
 };

@@ -1,4 +1,4 @@
-cmd.run = (client, message, args, Discord, db) => {
+exports.run = (client, message, args, Discord) => {
     const voiceChannel = message.member.voiceChannel;
     if (!voiceChannel) return message.channel.send("I'm sorry but you must be in the voice channel to request a song");
 
@@ -18,9 +18,15 @@ cmd.run = (client, message, args, Discord, db) => {
     
 }
 
-cmd.conf = {
+exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: ['vol'],
     permLevel: 0
+};
+  
+exports.help = {
+    name: "volume",
+    description: "This will change the volume",
+    usage: "<volume / vol> 1 - 200"
 };

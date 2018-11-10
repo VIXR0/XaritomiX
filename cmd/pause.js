@@ -1,4 +1,4 @@
-cmd.run = (client, message, args, Discord, db) => {
+exports.run = (client, message, args, Discord) => {
     if (!client.isVoiceChannel(message)) return;
 
     if (!client.music.has(message.guild.id)) return;
@@ -8,7 +8,7 @@ cmd.run = (client, message, args, Discord, db) => {
     message.channel.send("Stream has been **Paused**");
 }
 
-cmd.conf = {
+exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],

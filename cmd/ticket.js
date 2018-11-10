@@ -1,4 +1,4 @@
-cmd.run = (client, message, args, Discord, db) => {
+exports.run = (client, message, args, Discord) => {
 	if(message.member.roles.find(val => val.name === '.')) return message.channel.send("You already have an open ticket!").then(msg => msg.delete(5000));
 
 	function getID() {
@@ -19,9 +19,15 @@ cmd.run = (client, message, args, Discord, db) => {
 	message.member.addRole('510742129006477344');
 }
 
-cmd.conf = {
+exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],
     permLevel: 0
+};
+  
+exports.help = {
+    name: "ticket",
+    description: "This command creates a private ticket channel for the user.",
+    usage: "!ticket"
 };

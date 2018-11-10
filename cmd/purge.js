@@ -1,4 +1,4 @@
-cmd.run = (client, message, args, Discord, db) => {
+exports.run = (client, message, args, Discord) => {
 	if (isNaN(args[0])) return message.channel.send('**Please supply a valid amount of messages to purge**');
 	if (args[0] > 200) return message.channel.send('**Please supply a number less than 200**');
 
@@ -7,9 +7,15 @@ cmd.run = (client, message, args, Discord, db) => {
 		.catch(err => console.log(err));
 }
 
-cmd.conf = {
+exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],
     permLevel: 0
+};
+  
+exports.help = {
+    name: "purge",
+    description: "This command purges the set amount of messages in the channel",
+    usage: "!purge <#>"
 };
