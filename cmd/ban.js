@@ -1,4 +1,4 @@
-exports.run = (client, message, args) => {
+exports.run = (client, message, args, Discord) => {
 	let bReason = args.join(" ").slice(22);
     let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
 
@@ -8,7 +8,7 @@ exports.run = (client, message, args) => {
     if(!args[0] || args[0 == "help"]) return message.channel.send("Usage: !ban <user> <reason>");
 
     let banConfirm = new Discord.RichEmbed()
-    .setDescription(`${bUser} has been kicked for ${bReason}`);
+    .setDescription(`${bUser} has been banned for ${bReason}`);
 
     message.guild.member(bUser).kick(bReason);
     message.channel.send(banConfirm)

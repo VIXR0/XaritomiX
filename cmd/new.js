@@ -84,3 +84,16 @@ exports.run = (client, message, args, Discord) => {
         })
       })
 }
+
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: [],
+  permLevel: 0
+};
+
+exports.help = {
+  name: "new",
+  description: "This command will the specified user from the guild with a set reason.",
+  usage: "kick <@> <reason>"
+};
