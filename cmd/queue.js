@@ -2,9 +2,9 @@ exports.run = (client, message, args, Discord) => {
     const voicechannel = client.isVoiceChannel(message);
     if (!client.music.has(message.guild.id)) return; 
     const serverQueue = client.music.get(message.guild.id).songs;
-    let index = 1, page = 1, totalPages;
+    let index = 1, page = 1, totalPages, songArray;
 
-    (serverQueue.length > 10) ?  totalPages = serverQueue.length / 10 : totalPages = 1;
+    displayEmbed(message, chunkArray(serverQueue, 10), Discord, args.join(''));
     
 }
 function chunkArray(myArray, chunk_size){
@@ -20,7 +20,11 @@ function chunkArray(myArray, chunk_size){
     return tempArray;
 }
 
-function displayEmbed(message, songs, options, Discord) {
+function displayEmbed(message, serverQueue, Discord, args) {
+    let page = args;
+    let totalPages = serverQueue.length;
+    let index = 1;
+    if (!args) page = 1;
     let embed = new Discord.RichEmbed() 
     .setTitle(`Server Queue For Server: ${message.guild.name}`)
     .setDescription(`${index++} - ${serverQueue.map(songs => songs.title)}`)
