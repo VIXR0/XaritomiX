@@ -4,16 +4,12 @@ exports.run = (client, message, args, Discord) => {
         return coinFace[Math.floor(Math.random()*coinFace.length)];
     }
 
-    console.log(getWinner());
-
-    /*
     let winEmbed = new Discord.RichEmbed()
     .setColor('0xffffff')
     .setTitle('~ Coin Flip ~')
     .setDescription(`You Flipped ${getWinner()}!`);
 
     message.channel.send(winEmbed);
-    */
 }
 exports.conf = {
     enabled: true,
