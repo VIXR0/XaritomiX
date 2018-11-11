@@ -1,6 +1,6 @@
 exports.run = (client, message, args) => {
 	let bReason = args.join(" ").slice(22);
-    let bUser = message.guild.member(message.mentions.first() || message.guild.members.get(args[0]));
+    let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
 
     if(!bUser) return message.channel.send("Can't find user!");
     if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("You do not have the correct permissions to execute this command!");
