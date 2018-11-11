@@ -6,9 +6,9 @@ exports.run = (client, message, args) => {
     const slotThree = slots[Math.floor(Math.random() * slots.length)];
 
     if (slotOne == slotTwo && slotOne == slotThree) {
-        message.channel.send(`${slotOne} | ${slotTwo} | ${slotThree}\nCongrats! You Won!`);
+        message.channel.send(`\`${slotOne} | ${slotTwo} | ${slotThree}\nCongrats! You Won!\``);
     } else {
-        message.channel.send(`${slotOne} | ${slotTwo} | ${slotThree}\nAww, Better Luck Next Time!`);
+        message.channel.send(`\`${slotOne} | ${slotTwo} | ${slotThree}\nAww, Better Luck Next Time!\``);
     }
 
 }
