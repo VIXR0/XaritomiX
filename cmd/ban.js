@@ -1,4 +1,4 @@
-exports.run = (client, message, args) => {
+exports.run = (client, message, args, Discord) => {
 	let bReason = args.join(" ").slice(22);
     let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
 
