@@ -14,16 +14,16 @@ exports.run = (client, message, args, Discord) => {
 
     message.channel.send(winEmbed);
     */
-
+}
 exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],
     permLevel: 0
-};
+}
   
 exports.help = {
     name: "coinflip",
     description: "This command runs a coinflip simulation",
     usage: "!coinflip"
-};
+}
