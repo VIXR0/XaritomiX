@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const mutedSchema = mongoose.Schema({
+    guildID: String,
     mutedRole: String
 });
 
