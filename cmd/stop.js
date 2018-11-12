@@ -10,7 +10,7 @@ exports.run = (client, message, args, Discord) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: [],
+    aliases: ['leave'],
     permLevel: 0
 };
   
