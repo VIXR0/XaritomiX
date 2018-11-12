@@ -9,7 +9,7 @@ exports.run = (client, message, args, Discord) => {
     const serverQueue = client.music.get(message.guild.id).songs;
     let index = 1, page = 1, totalPages, songArray;
 
-    displayEmbed(message, chunkArray(serverQueue, 10), Discord, args.join(''), serverQueue);
+    displayEmbed(message, chunkArray(serverQueue, 10), Discord, args.join(''), serverQueue, client);
     
 }
 function chunkArray(myArray, chunk_size){
@@ -25,7 +25,7 @@ function chunkArray(myArray, chunk_size){
     return tempArray;
 }
 
-function displayEmbed(message, serverQueue, Discord, args, playlist) {
+function displayEmbed(message, serverQueue, Discord, args, playlist, client) {
     let page = args;
     let totalPages = serverQueue.length;
     let index = 1;
@@ -33,7 +33,13 @@ function displayEmbed(message, serverQueue, Discord, args, playlist) {
     let pageIndex = 10;
     let nowPlaying = serverQueue[0][0];
     let newServerQueue = newArrayForSongs(playlist);
-    let relatedSongs = getRelatedSongs(nowPlaying.id);
+    
+    ytapi.related(nowPlaying.id, 5, function(error, result) {
+        if (error) return;
+        console.log(result);
+        client.music.get(message.guild.id).relatedSongs.push(result)
+    });
+    return console.log(client.music.get(message.guild.id).relatedSongs);
 
 
     if (!args) page = 1;
@@ -52,17 +58,6 @@ function newArrayForSongs(currentPlaylist) {
     return newPlaylist;
 }
 
-function getRelatedSongs(song) {
-    ytapi.related(song, 5, function(error, result) {
-        if (error) {
-          console.log(error);
-        }
-        else {
-          console.log(JSON.stringify(result, null, 2));
-          return JSON.parse(result);
-        }
-      });
-}
 
 exports.conf = {
     enabled: true,

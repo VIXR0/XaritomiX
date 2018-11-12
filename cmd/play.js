@@ -99,7 +99,8 @@ async function checkandplay(message, song, client, voiceChannel, isPlaylist) {
             songs: [],
             volume: 100,
             isLoading: false,
-            isPLaying: false
+            isPLaying: false,
+            relatedSongs: []
         });
         if (client.music.get(message.guild.id).isLoading == true) return message.channel.send("Please wait for the playlist to load");
         if (isPlaylist) {
