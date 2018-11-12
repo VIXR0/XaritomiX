@@ -1,6 +1,6 @@
 const request = require("node-superfetch");
 
-exports.run = (client, message, args, Discord) => {
+exports.run = async (client, message, args, Discord) => {
     let msgEnc = args[0];
 
     if (!args[0]) {

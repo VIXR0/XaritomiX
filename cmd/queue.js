@@ -26,29 +26,11 @@ function chunkArray(myArray, chunk_size){
 }
 
 function displayEmbed(message, serverQueue, Discord, args, playlist, client) {
-    let page = args;
-    let totalPages = serverQueue.length;
-    let index = 1;
-    let relatedIndex = 1; 
-    let pageIndex = 10;
     let nowPlaying = serverQueue[0][0];
-    let newServerQueue = newArrayForSongs(playlist);
-    
     ytapi.related(nowPlaying.id, 5, function(error, result) {
         if (error) return;
-        console.log(result);
-        client.music.get(message.guild.id).relatedSongs.push(result)
+        sendMessage(message, serverQueue, Discord, args, playlist, client, result);
     });
-    return console.log(client.music.get(message.guild.id).relatedSongs);
-
-
-    if (!args) page = 1;
-    let embed = new Discord.RichEmbed() 
-    .setTitle(`Server Queue For Server: ${message.guild.name}`)
-    .setDescription(`\n__**Now Playing**__ \n ${nowPlaying.title} \n\n 📩 Playing Next 📩 \n ${newServerQueue[(args) ? parseInt(page) : parseInt(page - 1)].map(songs => `\`${(page == 1) ? index++ : page * 10 + index++}.\` [${songs.title}](${songs.url}) | \`(${songs.hours}:${songs.minutes}:${songs.seconds})Requested by ${songs.requester}\``).join("\n\n")} \n\n __**Related Songs**__ \n ${relatedSongs.map(related => `\`${relatedIndex++}.\` ${related.items.snippet.title}`).join("\n")} \n **${playlist.length} Enqeued**`)
-    .setFooter(`You are on page: ${page} / ${Math.floor(totalPages)}`)
-
-    message.channel.send(embed);
 }
 
 function newArrayForSongs(currentPlaylist) {
@@ -56,6 +38,26 @@ function newArrayForSongs(currentPlaylist) {
     tempSongs.shift();
     let newPlaylist = chunkArray(tempSongs, 10);
     return newPlaylist;
+}
+
+function sendMessage(message, serverQueue, Discord, args, playlist, client, related) {
+    let page = args;
+    let totalPages = serverQueue.length;
+    let index = 1;
+    let relatedIndex = 1; 
+    let pageIndex = 10;
+    let nowPlaying = serverQueue[0][0];
+    let newServerQueue = newArrayForSongs(playlist);
+
+    console.log(related.items[0]);
+
+    if (!args) page = 1;
+    let embed = new Discord.RichEmbed() 
+    .setTitle(`Server Queue For Server: ${message.guild.name}`)
+    .setDescription(`\n__**Now Playing**__ \n ${nowPlaying.title} \n\n 📩 Playing Next 📩 \n ${newServerQueue[(args) ? parseInt(page) : parseInt(page - 1)].map(songs => `\`${(page == 1) ? index++ : page * 10 + index++}.\` [${songs.title}](${songs.url}) | \`(${songs.hours}:${songs.minutes}:${songs.seconds}) - Requested by ${songs.requester}\``).join("\n\n")} \n\n __**Related Songs**__ \n ${related.items.map(related => `\`${relatedIndex++}.\` ${related.snippet.title}`).join("\n\n")} \n **${playlist.length} Enqeued**`)
+    .setFooter(`You are on page: ${page} / ${Math.floor(totalPages)}`)
+
+    message.channel.send(embed);
 }
 
 
