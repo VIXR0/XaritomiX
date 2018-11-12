@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 
-const playlistSchema = mongoose.Schema({
-    GuildID: String,
-    Songs: Array
-});
+let playlistSchema;
+try {
+    playlistSchema = mongoose.Schema("Playlists", {
+        GuildID: String,
+        Songs: Array
+    });
+}catch(err) {
+    playlistSchema = mongoose.model("Playlists")
+}
 
-module.exports = mongoose.model("Playlists", playlistSchema);
+
+module.exports = playlistSchema;
