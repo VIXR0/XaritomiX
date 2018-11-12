@@ -1,7 +1,4 @@
 const settings = require("../dfsettings.json");
-// const youtube = require("youtube-node");
-// const ytapi = new youtube();
-// ytapi.setKey(settings.YTAPI);
 const YouTube = require('simple-youtube-api');
 const youtube = new YouTube(settings.YTAPI);
 const ytdl = require("ytdl-core");
@@ -82,6 +79,7 @@ async function updateSongQueue(message, index, songs, client, voiceChannel) {
     song = {
         title: songs[index - 1].title,
         url: `https://youtube.com/watch?v=${songs[index - 1].id}`,
+        id: songs[index - 1].id,
         hours: duration.duration.hours,
         minutes: duration.duration.minutes,
         seconds: duration.duration.seconds,
@@ -141,6 +139,7 @@ async function checkandplay(message, song, client, voiceChannel, isPlaylist) {
 }
 
 async function getPlaylist(message, songRequest, client) {
+    let gotFirstSong = false;
     const playlist = await youtube.getPlaylist(songRequest); 
     const videos = await playlist.getVideos();
     client.music.get(message.guild.id).isLoading = true;
@@ -152,6 +151,7 @@ async function getPlaylist(message, songRequest, client) {
 
         title: videos[i].title,
         url: `https://youtube.com/watch?v=${videos[i].id}`,
+        id: videos[i].id,
         hours: duration.duration.hours,
         minutes: duration.duration.minutes,
         seconds: duration.duration.seconds,
@@ -159,12 +159,15 @@ async function getPlaylist(message, songRequest, client) {
 
         });
 
+        if (!gotFirstSong) {
+            gotFirstSong = true;
+            if (client.music.get(message.guild.id).isPlaying === true) return addSongPlaylistDB(message, client.music.get(message.guild.id).songs);
+            play(client, message, message.guild, client.music.get(message.guild.id).songs[0]);
+            addSongPlaylistDB(message, client.music.get(message.guild.id).songs);
+        }
+
         console.log(`Loaded: ${videos[i].title} ${i}`);
     }
-
-    if (client.music.get(message.guild.id).isPlaying === true) return addSongPlaylistDB(message, client.music.get(message.guild.id).songs);
-    play(client, message, message.guild, client.music.get(message.guild.id).songs[0]);
-    addSongPlaylistDB(message, client.music.get(message.guild.id).songs);
 }
 
 function play(client, message, guild, song) {
