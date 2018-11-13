@@ -1,7 +1,7 @@
 const request = require("node-superfetch");
 
 exports.run = async (client, message, args, Discord) => {
-    let msgEnc = args[0];
+    let msgEnc = args.join(" ");
 
     if (!args[0]) {
         message.channel.send('Usage: !encrypt <message>');
