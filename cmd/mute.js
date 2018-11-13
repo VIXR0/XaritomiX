@@ -1,3 +1,5 @@
+const ms = require("ms");
+
 exports.run = async (client, message, args, Discord) => {
     let toMute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     let muteRole = message.guild.roles.find(role=> role.name === "Muted");
