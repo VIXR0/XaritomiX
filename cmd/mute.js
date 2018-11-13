@@ -32,7 +32,7 @@ exports.run = async (client, message, args, Discord) => {
     message.channel.send(`<@${toMute.id}> has been muted for ${ms(ms(muteTime))}`);
 
     setTimeout(function() {
-        toMute.removeRoll(muteRole.id);
+        toMute.removeRole(muteRole.id);
         message.channel.send(`<@${toMute.id}> has been unmuted.`);
     }, ms(muteTime));
 
