@@ -12,14 +12,14 @@ exports.run = (client, message, args, Discord) => {
             .setTitle(`Server Settings for: **${message.guild.name}**`)
             .setDescription(`
 
-Prefix: ${result.Server_Prefix}
-Mod Channel: ${result.Server_Mod_Channel}
-Members Role: ${result.Server_Member_Role}
-Moderators Role ${result.Server_Moderator_Role}
-Administrators Role: ${result.Server_Admin_Role}
-Mute Role: ${result.Server_Mute_Role}
-Default Music Volume: ${result.Server_Default_Volume}
-Display Song Message: ${result.Server_Play_Next_Song_Message}
+Prefix: **${result.Server_Prefix}**
+Mod Channel: **${result.Server_Mod_Channel}**
+Members Role: **${result.Server_Member_Role}**
+Moderators Role **${result.Server_Moderator_Role}**
+Administrators Role: **${result.Server_Admin_Role}**
+Mute Role: **${result.Server_Mute_Role}**
+Default Music Volume: **${result.Server_Default_Volume}**
+Display Song Message: **${result.Server_Play_Next_Song_Message}**
 `)
             .setFooter(`Requested by: ${message.member.user.username}`)
             return message.channel.send( settingsEmbed );
