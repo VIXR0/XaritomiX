@@ -6,5 +6,6 @@ module.exports.isPremium = function(message) {
     premiumUsers.findOne( {UserID: message.author.id}, (err, user) => {
         if (err) return;
         if (!user) return message.channel.send("This is a patron only command");
-    }).then(() => { return true});
+    });
+    return true;
 }
