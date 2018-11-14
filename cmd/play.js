@@ -2,9 +2,10 @@ const settings = require("../dfsettings.json");
 const YouTube = require('simple-youtube-api');
 const youtube = new YouTube(settings.YTAPI);
 const ytdl = require("ytdl-core");
-const playlistDB = require("../models/Guild_playlist");
 const mongoose = require("mongoose");
 mongoose.connect('mongodb://localhost/XaritomiX', { useNewUrlParser: true});
+const playlistDB = require("../models/Guild_playlist");
+const relatedFunc = require("../functions/related");
 
 exports.run = async (client, message, args, perms, Discord) => {
     // Checks that the user is in the voice channel, if not then return
@@ -100,7 +101,8 @@ async function checkandplay(message, song, client, voiceChannel, isPlaylist) {
             volume: 100,
             isLoading: false,
             isPLaying: false,
-            relatedSongs: []
+            relatedSongs: [],
+            continuousPLay: false
         });
         if (client.music.get(message.guild.id).isLoading == true) return message.channel.send("Please wait for the playlist to load");
         if (isPlaylist) {
@@ -188,6 +190,9 @@ function play(client, message, guild, song) {
     dispatcher.setVolume(serverQueue.volume / 100);
 
     dispatcher.on("end", () => {
+        if (client.music.get(message.guild.id).continuousPlay) {
+            relatedFunc.run(client, message, Math.floor(Math.random() * 5) + 1);
+        }
         client.music.get(message.guild.id).songs.shift();
         setTimeout(() => {
              play(client, message, guild, client.music.get(message.guild.id).songs[0]);

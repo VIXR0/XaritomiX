@@ -7,7 +7,6 @@ exports.run = (client, message, args, Discord) => {
     const voicechannel = client.isVoiceChannel(message);
     if (!client.music.has(message.guild.id)) return; 
     const serverQueue = client.music.get(message.guild.id).songs;
-    let index = 1, page = 1, totalPages, songArray;
 
     displayEmbed(message, chunkArray(serverQueue, 10), Discord, args.join(''), serverQueue, client);
     
@@ -34,7 +33,19 @@ function displayEmbed(message, serverQueue, Discord, args, playlist, client) {
 }
 
 function newArrayForSongs(currentPlaylist) {
-    let tempSongs = currentPlaylist; 
+    let tempSongs = [];
+    for (var i = 0; i < currentPlaylist.length; i++) {
+        tempSongs.push({
+            title: currentPlaylist[i].title,
+            url: currentPlaylist[i].url,
+            id: currentPlaylist[i].id,
+            hours: currentPlaylist[i].hours,
+            minutes: currentPlaylist[i].minutes,
+            seconds: currentPlaylist[i].seconds,
+            requester: currentPlaylist[i].requester
+        });
+
+    } 
     tempSongs.shift();
     let newPlaylist = chunkArray(tempSongs, 10);
     return newPlaylist;
@@ -45,16 +56,15 @@ function sendMessage(message, serverQueue, Discord, args, playlist, client, rela
     let totalPages = serverQueue.length;
     let index = 1;
     let relatedIndex = 1; 
-    let pageIndex = 10;
     let nowPlaying = serverQueue[0][0];
     let newServerQueue = newArrayForSongs(playlist);
-
-    console.log(related.items[0]);
-
     if (!args) page = 1;
+
     let embed = new Discord.RichEmbed() 
     .setTitle(`Server Queue For Server: ${message.guild.name}`)
-    .setDescription(`\n__**Now Playing**__ \n ${nowPlaying.title} \n\n 📩 Playing Next 📩 \n ${newServerQueue[(args) ? parseInt(page) : parseInt(page - 1)].map(songs => `\`${(page == 1) ? index++ : page * 10 + index++}.\` [${songs.title}](${songs.url}) | \`(${songs.hours}:${songs.minutes}:${songs.seconds}) - Requested by ${songs.requester}\``).join("\n\n")} \n\n __**Related Songs**__ \n ${related.items.map(related => `\`${relatedIndex++}.\` ${related.snippet.title}`).join("\n\n")} \n **${playlist.length} Enqeued**`)
+    .setDescription(`\n__**Now Playing**__ \n\n \`0.\` [${nowPlaying.title}](${nowPlaying.url}) \`(${nowPlaying.hours}:${nowPlaying.minutes}:${nowPlaying.seconds}) - Requested by ${nowPlaying.requester}\` \n\n 📩 __**Playing Next**__ 📩 \n\n ${(playlist.length === 1) ? "No more songs are queued" : newServerQueue[(args) ? parseInt(page) : parseInt(page - 1)].map(songs => `\`${(page == 1) ? index++ : page * 10 + index++}.\` [${songs.title}](${songs.url}) | \`(${songs.hours}:${songs.minutes}:${songs.seconds}) - Requested by ${songs.requester}\``).join("\n\n")}`)
+    .addField("__**Related Songs**__ ", `${related.items.map(related => `\`${relatedIndex++}.\` ${related.snippet.title}`).join("\n\n")}`, true)
+    .addField("Queue Information", `**${playlist.length} songs Enqeued**`, true)
     .setFooter(`You are on page: ${page} / ${Math.floor(totalPages)}`)
 
     message.channel.send(embed);

@@ -2,9 +2,9 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs");
 const dfsettings = require("./dfsettings.json");
-const guildSettingsDB = require("./models/Guild_settings");
 const mongoose = require("mongoose");
 mongoose.connect('mongodb://localhost/XaritomiX', { useNewUrlParser: true});
+const guildSettingsDB = require("./models/Guild_settings");
 
 client.music = new Map();
 client.commands = new Discord.Collection();

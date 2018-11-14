@@ -14,4 +14,4 @@ const guildSettings = mongoose.Schema({
     Date: { type: Date, default: Date.now() }
 });
 
-module.exports = mongoose.model("Playlists", guildSettings);
+module.exports = mongoose.model("Guilds", guildSettings);
