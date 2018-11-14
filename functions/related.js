@@ -8,12 +8,12 @@ const mongoose = require("mongoose");
 mongoose.connect('mongodb://localhost/XaritomiX', { useNewUrlParser: true});
 const playlistDB = require("../models/Guild_playlist");
 
-exports.run = (client, message, index) => {
+exports.run = (client, message, index, Discord) => {
     if (!index) return message.channel.send("Please provide a number");
     let nowPlaying = client.music.get(message.guild.id).songs[0];
     ytapi.related(nowPlaying.id, 5, function(error, result) {
         if (error) return;
-        updatePlaylist(client, message, args, Discord, result);
+        updatePlaylist(client, message, index, Discord, result);
     });
 }
 

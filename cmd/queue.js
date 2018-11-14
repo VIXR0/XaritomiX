@@ -8,6 +8,9 @@ exports.run = (client, message, args, Discord) => {
     if (!client.music.has(message.guild.id)) return; 
     const serverQueue = client.music.get(message.guild.id).songs;
 
+    var intRegex = /^\d+$/;
+    if(intRegex.test(args.join(" "))) return; 
+
     displayEmbed(message, chunkArray(serverQueue, 10), Discord, args.join(''), serverQueue, client);
     
 }
