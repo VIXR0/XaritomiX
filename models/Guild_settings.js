@@ -9,6 +9,7 @@ const guildSettings = mongoose.Schema({
     Server_Admin_Role: String,
     Server_Member_Role: String,
     Server_Mute_Role: String,
+    Server_Con_Play: Boolean,
     Server_Default_Volume: Number, 
     Server_Play_Next_Song_Message: Boolean,
     Date: { type: Date, default: Date.now() }

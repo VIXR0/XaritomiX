@@ -10,6 +10,7 @@ const playlistDB = require("../models/Guild_playlist");
 
 exports.run = (client, message, index, Discord) => {
     if (!index) return message.channel.send("Please provide a number");
+    console.log("Random number" + index);
     let nowPlaying = client.music.get(message.guild.id).songs[0];
     ytapi.related(nowPlaying.id, 5, function(error, result) {
         if (error) return;
@@ -19,6 +20,7 @@ exports.run = (client, message, index, Discord) => {
 
 function updatePlaylist(client, message, args, Discord, result) {
     youtubeapi.getVideoByID(result.items[args - 1].id.videoId).then(rresults => {
+        console.log(rresults)
         client.music.get(message.guild.id).songs.push({
             title: rresults.title,
             url: `https://youtube.com/watch?v=${rresults.id}`,

@@ -7,6 +7,7 @@ mongoose.connect('mongodb://localhost/XaritomiX', { useNewUrlParser: true});
 const guildSettingsDB = require("./models/Guild_settings");
 
 client.music = new Map();
+client.premium = new Map();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.db = new Discord.Collection();
@@ -83,6 +84,7 @@ function addGuildSetting(guild) {
             Server_Admin_Role: "Administrator",
             Server_Member_Role: "Members",
             Server_Mute_Role: "Muted",
+            Server_Con_Play: false,
             Server_Default_Volume: "100", 
             Server_Play_Next_Song_Message: true
         });

@@ -190,14 +190,22 @@ function play(client, message, guild, song) {
     dispatcher.setVolume(serverQueue.volume / 100);
 
     dispatcher.on("end", () => {
-        if (client.music.get(message.guild.id).continuousPlay) {
-            relatedFunc.run(client, message, Math.floor(Math.random() * 5) + 1);
+        if (client.music.get(message.guild.id).continuousPlay && serverQueue.songs.length == 1) {
+            console.log("Hello there");
+            let index = Math.floor(Math.random() * 5) + 1;
+            console.log(index);
+            relatedFunc.run(client, message, index);
+            setTimeout(() => {
+                console.log("Done")
+            }, 500)
+
         }
+
         client.music.get(message.guild.id).songs.shift();
         setTimeout(() => {
              play(client, message, guild, client.music.get(message.guild.id).songs[0]);
              addSongPlaylistDB(message, serverQueue.songs);
-        }, 500);
+        }, 1000);
     });
 }
 

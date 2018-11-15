@@ -40,22 +40,6 @@ Display Song Message: **${result.Server_Play_Next_Song_Message}**
 }
 
 function runCommand(client, message, args, Discord, options) {
-    if (options == "continuousplay") {
-        let isPremium = premium.isPremium(message);
-        if (!isPremium) return console.log("Didn't work")
-        if (isPremium) {
-            console.log("Test")
-            if (!client.music.get(message.guild.id).continuousPlay == true) {
-                client.music.get(message.guild.id).continuousPlay = true;
-                message.channel.send("Set to **False**");
-            } else {
-                client.music.get(message.guild.id).continuousPlay = false;
-                message.channel.send("Set to **True**");
-            }
-            
-        }
-        return;
-    }
 
     if (options) {
         const ServerSettings = {
