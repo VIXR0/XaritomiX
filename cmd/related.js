@@ -1,13 +1,14 @@
 const relatedFunc = require("../functions/related");
 
 exports.run = (client, message, args, Discord) => {
-    relatedFunc.run(client, message, args, Discord);
+    
+    relatedFunc.setAndUpdate(client, message, args.join(" "));
 }
 
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: [],
+    aliases: ['r'],
     permLevel: 0
 };
   

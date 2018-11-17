@@ -1,4 +1,5 @@
 const settings = require("../dfsettings.json");
+const relatedFunc = require('../functions/related');
 const youtube = require("youtube-node");
 const ytapi = new youtube();
 ytapi.setKey(settings.YTAPI);
@@ -10,8 +11,7 @@ exports.run = (client, message, args, Discord) => {
 
     var intRegex = /^\d+$/;
     if(intRegex.test(args.join(" "))) return; 
-
-    displayEmbed(message, chunkArray(serverQueue, 10), Discord, args.join(''), serverQueue, client);
+    sendMessage(message, chunkArray(serverQueue, 10), Discord, args.join(''), serverQueue, client);
     
 }
 function chunkArray(myArray, chunk_size){
@@ -25,14 +25,6 @@ function chunkArray(myArray, chunk_size){
     }
 
     return tempArray;
-}
-
-function displayEmbed(message, serverQueue, Discord, args, playlist, client) {
-    let nowPlaying = serverQueue[0][0];
-    ytapi.related(nowPlaying.id, 5, function(error, result) {
-        if (error) return;
-        sendMessage(message, serverQueue, Discord, args, playlist, client, result);
-    });
 }
 
 function newArrayForSongs(currentPlaylist) {
@@ -66,7 +58,7 @@ function sendMessage(message, serverQueue, Discord, args, playlist, client, rela
     let embed = new Discord.RichEmbed() 
     .setTitle(`Server Queue For Server: ${message.guild.name}`)
     .setDescription(`\n__**Now Playing**__ \n\n \`0.\` [${nowPlaying.title}](${nowPlaying.url}) \`(${nowPlaying.hours}:${nowPlaying.minutes}:${nowPlaying.seconds}) - Requested by ${nowPlaying.requester}\` \n\n 📩 __**Playing Next**__ 📩 \n\n ${(playlist.length === 1) ? "No more songs are queued" : newServerQueue[(args) ? parseInt(page) : parseInt(page - 1)].map(songs => `\`${(page == 1) ? index++ : page * 10 + index++}.\` [${songs.title}](${songs.url}) | \`(${songs.hours}:${songs.minutes}:${songs.seconds}) - Requested by ${songs.requester}\``).join("\n\n")}`)
-    .addField("__**Related Songs**__ ", `${related.items.map(related => `\`${relatedIndex++}.\` ${related.snippet.title}`).join("\n\n")}`, true)
+    .addField("__**Related Songs**__ ", client.music.get(message.guild.id).tempRSongs.map(temp => `\`${relatedIndex++}.\` ${temp.title}`).join("\n"), true)
     .addField("Queue Information", `**${playlist.length} songs Enqeued**`, true)
     .setFooter(`You are on page: ${page} / ${Math.floor(totalPages)}`)
 

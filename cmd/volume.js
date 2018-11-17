@@ -9,7 +9,7 @@ exports.run = (client, message, args, Discord) => {
         client.music.get(message.guild.id).volume = args.join(" ");
         const dispatcher = client.music.get(message.guild.id).dispatcher;
         dispatcher.setVolume(client.music.get(message.guild.id).volume / 100); 
-        message.channel.send(`Setting volume to: **${message.guild.name}** to ${args.join(" ")}`);
+        message.channel.send(`Setting volume for server: **${message.guild.name}** to ${args.join(" ")}`);
     } else {
         message.channel.send(`${args.join(" ")} is not a valid input, Please use a number between 1 - 200.`);
     }

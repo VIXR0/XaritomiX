@@ -84,7 +84,8 @@ async function updateSongQueue(message, index, songs, client, voiceChannel) {
         hours: duration.duration.hours,
         minutes: duration.duration.minutes,
         seconds: duration.duration.seconds,
-        requester: message.guild.member(message.author).displayName
+        requester: message.guild.member(message.author).displayName,
+        username: message.guild.member(message.author).user.username
     };
 
     checkandplay(message, song, client, voiceChannel)
@@ -99,6 +100,7 @@ async function checkandplay(message, song, client, voiceChannel, isPlaylist) {
             connection: null,
             songs: [],
             relatedSongs: [],
+            tempRSongs: [],
             volume: 100,
             isLoading: false,
             isPLaying: false,
@@ -158,16 +160,18 @@ async function getPlaylist(message, songRequest, client) {
         hours: duration.duration.hours,
         minutes: duration.duration.minutes,
         seconds: duration.duration.seconds,
-        requester: message.guild.member(message.author).displayName
+        requester: message.guild.member(message.author).displayName,
+        username: message.guild.member(message.author).user.username
 
-        });
+    });
 
-        if (!gotFirstSong) {
-            gotFirstSong = true;
-            if (client.music.get(message.guild.id).isPlaying === true) return addSongPlaylistDB(message, client.music.get(message.guild.id).songs);
-            play(client, message, message.guild, client.music.get(message.guild.id).songs[0]);
-            addSongPlaylistDB(message, client.music.get(message.guild.id).songs);
-        }
+
+    if (!gotFirstSong) {
+        gotFirstSong = true;
+        if (client.music.get(message.guild.id).isPlaying === true) return addSongPlaylistDB(message, client.music.get(message.guild.id).songs);
+        play(client, message, message.guild, client.music.get(message.guild.id).songs[0]);
+        addSongPlaylistDB(message, client.music.get(message.guild.id).songs);
+    }
 
         console.log(`Loaded: ${videos[i].title} ${i}`);
     }
@@ -185,27 +189,37 @@ function play(client, message, guild, song) {
     }
 
     message.channel.send(`Now playing **${song.title}** (${song.hours}:${song.minutes}:${song.seconds}) -- Requested by ${song.requester}`);
+    relatedFunc.getAndUpdate(client, message);
+    relatedFunc.getTempRSongs(client, message);
     const dispatcher = serverQueue.connection.playStream(ytdl(`${song.url}`));
     serverQueue.dispatcher = dispatcher;
     dispatcher.setVolume(serverQueue.volume / 100);
 
+    console.log(client.music.get(message.guild.id).relatedSongs)
+
     dispatcher.on("end", () => {
         if (client.music.get(message.guild.id).continuousPlay && serverQueue.songs.length == 1) {
-            console.log("Hello there");
-            let index = Math.floor(Math.random() * 5) + 1;
-            console.log(index);
-            relatedFunc.run(client, message, index);
-            setTimeout(() => {
-                console.log("Done")
-            }, 500)
+            let relatedSongs = client.music.get(message.guild.id).relatedSongs;
+            for (let i = 0; i < relatedSongs.length; i++) {
+                serverQueue.songs.push({
+                    title: relatedSongs[i].title,
+                    url: `https://youtube.com/watch?v=${relatedSongs[i].id}`,
+                    id: relatedSongs[i].id,
+                    hours: relatedSongs[i].hours,
+                    minutes: relatedSongs[i].minutes,
+                    seconds: relatedSongs[i].seconds,
+                    requester: relatedSongs[i].requester
+                })
+            } 
 
+            relatedSongs = [];
         }
 
         client.music.get(message.guild.id).songs.shift();
         setTimeout(() => {
              play(client, message, guild, client.music.get(message.guild.id).songs[0]);
              addSongPlaylistDB(message, serverQueue.songs);
-        }, 1000);
+        }, 500);
     });
 }
 
